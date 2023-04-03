@@ -17,6 +17,7 @@ class Tutorials(Directive):
 """
         output.append(nodes.raw(text=intro, format="html"))
         # Tutorials
+        cards = list()
         for num in tutorials.keys():
             data = tutorials[num]
             steps = data["steps"]
@@ -34,8 +35,27 @@ class Tutorials(Directive):
                 description=data["description"],
                 buttons=buttons
             )
-            output.append(nodes.raw(text=card_num, format="html"))
+            cards.append(card_num)
+        output.append(nodes.raw(text=self._card_container(cards), format="html"))
         return output
+
+    @staticmethod
+    def _card_container(cards):
+        card_container = """
+<div class="tutorial-container">
+  <div class="tutorial-row">
+"""
+        for card in cards:
+            card_container += """
+    <div class="tutorial-column">
+""" + card + """
+    </div>
+"""
+        card_container += """
+  </div>
+</div>
+"""
+        return card_container
 
     @staticmethod
     def _card(num, title, description, buttons):
