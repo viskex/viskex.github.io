@@ -40,15 +40,11 @@ jobs:
       work_directory: open_in_colab
       notebook_pattern: ${{ matrix.notebook_pattern }}
       notebook_preparation: |
-        python3 -m pip install --no-dependencies git+https://github.com/multiphenics/nbvalx.git
         git clone https://github.com/viskex/viskex.git
         cd viskex
         if [ -n "${{ (inputs || github.event.inputs).branch }}" ]; then
           git checkout "${{ (inputs || github.event.inputs).branch }}"
         fi
-        NO_TESTS_COLLECTED=5
-        python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_colab tutorials || (($?==$NO_TESTS_COLLECTED))
-        find tutorials -type d -name .ipynb_colab -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
         NOTEBOOKS_TO_INCLUDE=""
         while read -r PATTERN; do
           NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
@@ -90,15 +86,11 @@ jobs:
       work_directory: open_in_kaggle
       notebook_pattern: ${{ matrix.notebook_pattern }}
       notebook_preparation: |
-        python3 -m pip install --no-dependencies git+https://github.com/multiphenics/nbvalx.git
         git clone https://github.com/viskex/viskex.git
         cd viskex
         if [ -n "${{ (inputs || github.event.inputs).branch }}" ]; then
           git checkout "${{ (inputs || github.event.inputs).branch }}"
         fi
-        NO_TESTS_COLLECTED=5
-        python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_kaggle tutorials || (($?==$NO_TESTS_COLLECTED))
-        find tutorials -type d -name .ipynb_kaggle -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
         NOTEBOOKS_TO_INCLUDE=""
         while read -r PATTERN; do
           NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
