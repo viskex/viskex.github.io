@@ -1,0 +1,130 @@
+name: "Update notebooks for cloud environments"
+
+on:
+  push:
+    branches:
+      - "**"
+      - "!gh-pages"
+      - "!open-in-colab"
+      - "!open-in-kaggle"
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: "0 4 * * MON"
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch on viskex repository"
+        type: string
+
+jobs:
+  open_in_colab:
+    strategy:
+      matrix:
+        include:
+          - backend: dolfinx
+            fem_on_colab_packages: |
+              gmsh@current%dolfinx.io
+              fenicsx==real@current$dolfinx
+            notebook_pattern: |
+              "**/tutorial_*_dolfinx.ipynb"
+          - backend: firedrake
+            fem_on_colab_packages: |
+              firedrake==real@current
+            notebook_pattern: |
+              "**/tutorial_*_firedrake.ipynb"
+      fail-fast: false
+    uses: fem-on-colab/open-in-colab-workflow/.github/workflows/workflow_call.yml@main
+    with:
+      work_directory: open_in_colab
+      notebook_pattern: ${{ matrix.notebook_pattern }}
+      notebook_preparation: |
+        python3 -m pip install --no-dependencies git+https://github.com/multiphenics/nbvalx.git
+        git clone https://github.com/viskex/viskex.git
+        cd viskex
+        if [ -n "${{ (inputs || github.event.inputs).branch }}" ]; then
+          git checkout "${{ (inputs || github.event.inputs).branch }}"
+        fi
+        NO_TESTS_COLLECTED=5
+        python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_colab tutorials || (($?==$NO_TESTS_COLLECTED))
+        find tutorials -type d -name .ipynb_colab -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
+        NOTEBOOKS_TO_INCLUDE=""
+        while read -r PATTERN; do
+          NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
+        done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
+        rsync -avz --delete --include "*/" ${NOTEBOOKS_TO_INCLUDE} --exclude="*" tutorials ../open_in_colab/
+      fem_on_colab_packages: ${{ matrix.fem_on_colab_packages }}
+      pip_packages: |
+        viskex@https://github.com/viskex/viskex.git@current
+      test_script: |
+        apt install -y -qq libgl1-mesa-glx xvfb
+        export DISPLAY=":99"
+        Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
+        NOTEBOOKS_TO_TEST=""
+        while read -r PATTERN; do
+          NOTEBOOKS_TO_TEST="${NOTEBOOKS_TO_TEST} $(find open_in_colab -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
+        done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
+        python3 -m pytest --nbval ${NOTEBOOKS_TO_TEST}
+      publish_on: github@viskex/viskex.github.io@open-in-colab
+      publish_if_repository: viskex/viskex.github.io
+
+  open_in_kaggle:
+    strategy:
+      matrix:
+        include:
+          - backend: dolfinx
+            fem_on_kaggle_packages: |
+              gmsh@current%dolfinx.io
+              fenicsx==real@current$dolfinx
+            notebook_pattern: |
+              "**/tutorial_*_dolfinx.ipynb"
+          - backend: firedrake
+            fem_on_kaggle_packages: |
+              firedrake==real@current
+            notebook_pattern: |
+              "**/tutorial_*_firedrake.ipynb"
+      fail-fast: false
+    uses: fem-on-kaggle/open-in-kaggle-workflow/.github/workflows/workflow_call.yml@main
+    with:
+      work_directory: open_in_kaggle
+      notebook_pattern: ${{ matrix.notebook_pattern }}
+      notebook_preparation: |
+        python3 -m pip install --no-dependencies git+https://github.com/multiphenics/nbvalx.git
+        git clone https://github.com/viskex/viskex.git
+        cd viskex
+        if [ -n "${{ (inputs || github.event.inputs).branch }}" ]; then
+          git checkout "${{ (inputs || github.event.inputs).branch }}"
+        fi
+        NO_TESTS_COLLECTED=5
+        python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_kaggle tutorials || (($?==$NO_TESTS_COLLECTED))
+        find tutorials -type d -name .ipynb_kaggle -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
+        NOTEBOOKS_TO_INCLUDE=""
+        while read -r PATTERN; do
+          NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
+        done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
+        rsync -avz --delete --include "*/" ${NOTEBOOKS_TO_INCLUDE} --exclude="*" tutorials ../open_in_kaggle/
+      fem_on_kaggle_packages: ${{ matrix.fem_on_kaggle_packages }}
+      pip_packages: |
+        viskex@https://github.com/viskex/viskex.git@current
+      test_script: |
+        apt install -y -qq libgl1-mesa-glx xvfb
+        export DISPLAY=":99"
+        Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
+        NOTEBOOKS_TO_TEST=""
+        while read -r PATTERN; do
+          NOTEBOOKS_TO_TEST="${NOTEBOOKS_TO_TEST} $(find open_in_kaggle -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
+        done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
+        python3 -m pytest --nbval ${NOTEBOOKS_TO_TEST}
+      publish_on: github@viskex/viskex.github.io@open-in-kaggle
+      publish_if_repository: viskex/viskex.github.io
+
+  warn:
+    runs-on: ubuntu-latest
+    if: github.repository == 'viskex/viskex.github.io' && github.ref == 'refs/heads/main' && github.event_name == 'schedule'
+    steps:
+    - name: Warn if scheduled workflow is about to be disabled
+      uses: fem-on-colab/warn-workflow-about-to-be-disabled-action@main
+      with:
+        workflow-filename: open_in_cloud.yml
+        days-elapsed: 50
