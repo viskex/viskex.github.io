@@ -68,13 +68,15 @@ jobs:
           fetch-depth: 0
           path: _website
       - name: Setup container
-        run: |
-          ${{ matrix.setup_container }}
-          python3 -m pip -q install nbconvert
+        run: ${{ matrix.setup_container }}
       - name: Install viskex
         run: python3 -m pip install .[tutorials]
-      - name: Install nbconvert
-        run: python3 -m pip -q install nbconvert
+      - name: Install nbconvert and configure plotly
+        run: |
+          python3 -m pip -q install nbconvert
+          PLOTLY_INIT=$(python3 -c 'import plotly; print(plotly.__file__)')
+          echo "import plotly.offline" >> ${PLOTLY_INIT}
+          echo "plotly.offline.init_notebook_mode(connected=True)" >> ${PLOTLY_INIT}
       - name: Copy jupyter template from website repository
         run: |
           jupyter --paths --json > /tmp/jupyter-paths
