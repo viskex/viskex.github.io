@@ -150,19 +150,20 @@ def on_build_finished(app, exc):
         index_content = index_content.replace("<head>", "<head>\n" + seo_head)
         with open(index, "w") as f:
             f.write(index_content)
-        # Get tutorial nbconvert html files from git
+        # Get tutorial nbconvert html files from git, if not already available
         for num in tutorials.keys():
             for step_files in tutorials[num]["steps"].values():
                 for url in step_files.values():
-                    html_generated = subprocess.run(
-                        "mkdir -p " + os.path.dirname(os.path.join(app.outdir, url)) + " && " +
-                        "git show origin/gh-pages:" + url + "> " + os.path.join(app.outdir, url),
-                        shell=True, capture_output=True)
-                    if html_generated.returncode != 0:
-                        raise RuntimeError(
-                            "HTML generation of " + url + " not found\n"
-                            + "stdout contains " + html_generated.stdout.decode() + "\n"
-                            + "stderr contains " + html_generated.stderr.decode() + "\n")
+                    if not os.path.exists(os.path.join(app.outdir, url)):
+                        html_generated = subprocess.run(
+                            "mkdir -p " + os.path.dirname(os.path.join(app.outdir, url)) + " && " +
+                            "git show origin/gh-pages:" + url + "> " + os.path.join(app.outdir, url),
+                            shell=True, capture_output=True)
+                        if html_generated.returncode != 0:
+                            raise RuntimeError(
+                                "HTML generation of " + url + " not found\n"
+                                + "stdout contains " + html_generated.stdout.decode() + "\n"
+                                + "stderr contains " + html_generated.stderr.decode() + "\n")
 
 
 create_sitemap_bak = sphinx_material.create_sitemap

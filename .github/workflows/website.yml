@@ -88,12 +88,12 @@ jobs:
           while read -r PATTERN; do
             NOTEBOOKS_TO_RUN+=($(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g')))
           done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
-          mkdir -p _build/html
+          mkdir -p _converted
           export DISPLAY=":99"
           Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
           for NOTEBOOK in "${NOTEBOOKS_TO_RUN[@]}"; do
             NOTEBOOK_DIRNAME=$(dirname "${NOTEBOOK}")
-            NOTEBOOK_OUTPUT_DIRNAME=${GITHUB_WORKSPACE}/_build/html/${NOTEBOOK_DIRNAME}
+            NOTEBOOK_OUTPUT_DIRNAME=${GITHUB_WORKSPACE}/_converted/${NOTEBOOK_DIRNAME}
             NOTEBOOK_BASENAME=$(basename "${NOTEBOOK}")
             NOTEBOOK_OUTPUT_BASENAME=${NOTEBOOK_BASENAME/.ipynb/.html}
             pushd ${NOTEBOOK_DIRNAME}
@@ -109,46 +109,12 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: converted-notebooks-${{ matrix.backend }}
-          path: _build/html
+          path: _converted
           retention-days: 1
-
-  publish_notebooks:
-    runs-on: ubuntu-latest
-    needs: [convert_notebooks]
-    steps:
-      - name: Clone website repository on current branch
-        uses: actions/checkout@v3
-      - name: Clone website repository on gh-pages branch
-        uses: actions/checkout@v3
-        with:
-          ref: gh-pages
-          fetch-depth: 0
-          path: _build/html
-      - name: Download converted notebooks from artifacts
-        uses: actions/download-artifact@v3
-        with:
-          path: _build/html
-      - name: Flatten the artifacts hierarchy
-        run: |
-          rsync -avh --remove-source-files _build/html/converted-notebooks-*/ _build/html/
-          find _build/html/ -type d -empty -delete
-      - name: Upload release file to website
-        if: github.repository == 'viskex/viskex.github.io' && github.ref == 'refs/heads/main'
-        run: |
-          SHA_SHORT=$(git rev-parse --short HEAD)
-          pushd _build/html
-          git config user.name "GitHub Actions"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git pull origin gh-pages
-          [ -n "$(git status --porcelain=v1 2>/dev/null)" ] && git commit -m "deploy notebooks: ${SHA_SHORT}"
-          git push origin gh-pages
-          popd
-        shell: bash
 
   website:
     runs-on: ubuntu-latest
-    needs: [publish_notebooks]
+    needs: [convert_notebooks]
     steps:
       - name: Clone website repository on current branch
         uses: actions/checkout@v3
@@ -163,9 +129,16 @@ jobs:
       - name: Install dependencies
         run: |
           pip3 -q install sphinx-material
+      - name: Download converted notebooks from artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: _converted
       - name: Generate sphinx website
         run: |
-          rm -rf _build/html/* && make html
+          rm -rf _build/html/*
+          rsync -avh --remove-source-files _converted/converted-notebooks-*/ _build/html/
+          rm -rf _converted
+          make html
       - name: Fix permissions
         run: |
           sudo chown $USER _build -R
@@ -191,7 +164,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git pull origin gh-pages
-          [ -n "$(git status --porcelain=v1 2>/dev/null)" ] && git commit -m "deploy website: ${SHA_SHORT}"
+          [ -n "$(git status --porcelain=v1 2>/dev/null)" ] && git commit -m "deploy: ${SHA_SHORT}"
           git push origin gh-pages
           popd
         shell: bash
