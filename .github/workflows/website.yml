@@ -29,7 +29,7 @@ jobs:
             container: dolfinx/dolfinx:nightly
             setup_container: |
               export DEBIAN_FRONTEND="noninteractive"
-              apt -y -qq update
+              apt update -y -q
               apt install -y -qq libgl1-mesa-glx xvfb
             notebook_pattern: |
               "**/tutorial_*_dolfinx.ipynb"
@@ -37,7 +37,7 @@ jobs:
             container: firedrakeproject/firedrake
             setup_container: |
               export DEBIAN_FRONTEND="noninteractive"
-              apt -y -qq update
+              apt update -y -q
               apt install -y -qq libgl1-mesa-glx xorg xvfb
               echo "/home/firedrake/firedrake/bin" >> $GITHUB_PATH
             notebook_pattern: |
