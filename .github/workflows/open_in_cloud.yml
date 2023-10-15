@@ -31,9 +31,10 @@ jobs:
               "**/tutorial_*_dolfinx.ipynb"
           - backend: firedrake
             fem_on_colab_packages: |
+              ngsolve@current%netgen
               firedrake==real@current
             notebook_pattern: |
-              "**/tutorial_*_firedrake.ipynb"
+              "**/tutorial_*_firedrake*.ipynb"
       fail-fast: false
     uses: fem-on-colab/open-in-colab-workflow/.github/workflows/workflow_call.yml@main
     with:
@@ -77,9 +78,10 @@ jobs:
               "**/tutorial_*_dolfinx.ipynb"
           - backend: firedrake
             fem_on_kaggle_packages: |
+              ngsolve@current%netgen
               firedrake==real@current
             notebook_pattern: |
-              "**/tutorial_*_firedrake.ipynb"
+              "**/tutorial_*_firedrake*.ipynb"
       fail-fast: false
     uses: fem-on-kaggle/open-in-kaggle-workflow/.github/workflows/workflow_call.yml@main
     with:
