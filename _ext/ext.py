@@ -111,7 +111,7 @@ class Tutorials(Directive):
     def _library_image(library):
         if library == "dolfinx":
             logo = "_static/images/dolfinx-logo.png"
-        elif library == "firedrake":
+        elif library in ("firedrake", "firedrake + netgen"):
             logo = "_static/images/firedrake-logo.png"
         else:
             raise RuntimeError("Invalid type")

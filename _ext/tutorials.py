@@ -5,7 +5,8 @@ tutorials = {
         "steps": {
             "Select the finite element backend": {
                 "dolfinx": "tutorials/01_introduction/tutorial_introduction_dolfinx.html",
-                "firedrake": "tutorials/01_introduction/tutorial_introduction_firedrake.html"
+                "firedrake": "tutorials/01_introduction/tutorial_introduction_firedrake.html",
+                "firedrake + netgen": "tutorials/01_introduction/tutorial_introduction_firedrake_netgen.html"
             },
         },
     },
