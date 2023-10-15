@@ -41,7 +41,7 @@ jobs:
               apt install -y -qq libgl1-mesa-glx xorg xvfb
               echo "/home/firedrake/firedrake/bin" >> $GITHUB_PATH
             notebook_pattern: |
-              "**/tutorial_*_firedrake.ipynb"
+              "**/tutorial_*_firedrake*.ipynb"
       fail-fast: false
     container:
       image: ${{ matrix.container }}
