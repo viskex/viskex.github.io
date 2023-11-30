@@ -28,7 +28,7 @@ and install the package by typing
 
 External libraries used for plotting
 ------------------------------------
-1D plots are provided by :code:`plotly`, while 2D/3D plots are rendered with :code:`pyvista`. Supported :code:`pyvista` backends are :code:`trame` and :code:`panel`. The default :code:`pyvista` backend is :code:`trame` when running in JupyterLab, and :code:`panel` when running on Google Colab or Kaggle. Users can customize the active :code:`pyvista` backend by exporting the environment variable :code:`VISKEX_PYVISTA_BACKEND`: such operation is typically not required, with the only notable exceptions being testing different :code:`pyvista` backends on CI, or exporting notebooks to html via :code:`nbconvert`.
+1D plots are provided by :code:`plotly`, while 2D/3D plots are rendered with :code:`pyvista` using :code:`trame`. The default :code:`pyvista` backend is :code:`client` when running in JupyterLab, and :code:`html` when running on Google Colab or Kaggle. Users can customize the active :code:`pyvista` backend by exporting the environment variable :code:`VISKEX_PYVISTA_BACKEND`: such operation is typically not required, with the only notable exceptions being testing different :code:`pyvista` backends on CI, or exporting notebooks to html via :code:`nbconvert`.
 
 Compatibility with upstream releases
 ------------------------------------
