@@ -106,6 +106,7 @@ jobs:
             pushd ${NOTEBOOK_OUTPUT_DIRNAME}
             sed -i "s|\"https://colab.research.google.com\"|\"https://colab.research.google.com/github/viskex/viskex.github.io/blob/open-in-colab/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
             sed -i "s|\"https://kaggle.com\"|\"https://kaggle.com/kernels/welcome?src=https://github.com/viskex/viskex.github.io/blob/open-in-kaggle/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
+            sed -i "s|\"https://github.com\"|\"https://github.com/viskex/viskex/blob/main/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
             popd
           done
         shell: bash
