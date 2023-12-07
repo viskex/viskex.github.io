@@ -29,11 +29,10 @@ Description
 
 **viskex** is a library for the interactive visualization of finite element simulations within jupyter notebooks in JupyterLab, Google Colab or Kaggle. Supported finite element backends are `dolfinx <https://github.com/FEniCS/dolfinx>`__ and `firedrake <https://github.com/firedrakeproject/firedrake>`__.
 
-Authors and contributors
+Authors
 ------------------------
 
 **viskex** is currently developed and maintained at `Università Cattolica del Sacro Cuore <https://www.unicatt.it/>`__ by `Dr. Francesco Ballarin <https://www.francescoballarin.it>`__.
-We acknowledge all contributors listed in the `AUTHORS file <https://github.com/viskex/viskex/blob/main/AUTHORS>`__.
 
 Timeline and funding
 ------------------------
