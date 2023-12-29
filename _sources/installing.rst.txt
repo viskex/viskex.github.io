@@ -34,7 +34,7 @@ External libraries used for plotting
 Compatibility with upstream releases
 ------------------------------------
 
-**viskex** targets the :code:`main` branch of :code:`dolfinx` and :code:`firedrake`, which may contain API changes compared to the latest release of the finite element backend. A new **viskex** version is not necessarily tagged alongside :code:`dolfinx` or :code:`firedrake` releases. Users willing to work with a fixed release of the finite element backend are encouraged to look for a **viskex** `commit <https://github.com/viskex/viskex/commits/main>`__ close to the upstream release date, and do a
+The :code:`main` branch of **viskex** targets the :code:`main` branch of :code:`dolfinx` and :code:`firedrake`, which may contain API changes compared to the latest release of the finite element backend. A new **viskex** version is not necessarily tagged alongside :code:`dolfinx` or :code:`firedrake` releases. Users willing to work with a fixed release of the finite element backend are encouraged to look for a **viskex** `commit <https://github.com/viskex/viskex/commits/main>`__ close to the upstream release date, and do a
 
 .. code-block:: console
 
