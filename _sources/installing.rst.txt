@@ -24,7 +24,8 @@ and install the package by typing
 
 .. code-block:: console
 
-    python3 -m pip install .[tutorials]
+    cd viskex
+    python3 -m pip install '.[tutorials]'
 
 External libraries used for plotting
 ------------------------------------
