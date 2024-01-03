@@ -55,7 +55,7 @@ jobs:
       pip_packages: |
         viskex@https://github.com/viskex/viskex.git@current
       test_script: |
-        apt install -y -qq libgl1-mesa-glx xvfb
+        apt install -y -qq xvfb
         export DISPLAY=":99"
         Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
         NOTEBOOKS_TO_TEST=""
@@ -102,7 +102,7 @@ jobs:
       pip_packages: |
         viskex@https://github.com/viskex/viskex.git@current
       test_script: |
-        apt install -y -qq libgl1-mesa-glx xvfb
+        apt install -y -qq xvfb
         export DISPLAY=":99"
         Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
         NOTEBOOKS_TO_TEST=""
