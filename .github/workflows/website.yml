@@ -110,6 +110,7 @@ jobs:
             sed -i "s|\"https://kaggle.com\"|\"https://kaggle.com/kernels/welcome?src=https://github.com/viskex/viskex.github.io/blob/open-in-kaggle/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
             sed -i "s|\"https://github.com\"|\"https://github.com/viskex/viskex/blob/main/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
             popd
+            python3 _website/share/jupyter/add_whats_next.py ${NOTEBOOK_DIRNAME} ${NOTEBOOK_OUTPUT_BASENAME} ${NOTEBOOK_OUTPUT_DIRNAME}/${NOTEBOOK_OUTPUT_BASENAME}
           done
         shell: bash
       - name: Store converted notebooks as artifacts
