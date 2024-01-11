@@ -68,7 +68,9 @@ jobs:
           fetch-depth: 0
           path: _website
       - name: Setup container
-        run: ${{ matrix.setup_container }}
+        run: |
+          ${{ matrix.setup_container }}
+          apt install -y -qq rsync
       - name: Install viskex
         run: |
           BACKEND=backend_${{ matrix.backend }}
@@ -85,6 +87,9 @@ jobs:
           rm /tmp/jupyter-paths
       - name: Convert notebooks to html
         run: |
+          NO_TESTS_COLLECTED=5
+          python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_nbconvert tutorials || (($?==$NO_TESTS_COLLECTED))
+          find tutorials -type d -name .ipynb_nbconvert -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
           NOTEBOOKS_TO_RUN=()
           while read -r PATTERN; do
             NOTEBOOKS_TO_RUN+=($(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g')))

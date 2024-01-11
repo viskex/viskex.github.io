@@ -47,9 +47,13 @@ jobs:
         fi
         BACKEND="${{ matrix.backend }}"
         NOTEBOOK_PATTERN="${{ matrix.notebook_pattern }}"
+        python3 -m pip install --no-dependencies nbvalx simpleeval
         git clone https://github.com/viskex/viskex.git
         cd viskex
         git checkout ${BRANCH}
+        NO_TESTS_COLLECTED=5
+        python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_colab tutorials || (($?==$NO_TESTS_COLLECTED))
+        find tutorials -type d -name .ipynb_colab -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
         NOTEBOOKS_TO_PATCH=""
         while read -r PATTERN; do
           NOTEBOOKS_TO_PATCH="${NOTEBOOKS_TO_PATCH} $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
@@ -103,9 +107,13 @@ jobs:
         fi
         BACKEND="${{ matrix.backend }}"
         NOTEBOOK_PATTERN="${{ matrix.notebook_pattern }}"
+        python3 -m pip install --no-dependencies nbvalx simpleeval
         git clone https://github.com/viskex/viskex.git
         cd viskex
         git checkout ${BRANCH}
+        NO_TESTS_COLLECTED=5
+        python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_kaggle tutorials || (($?==$NO_TESTS_COLLECTED))
+        find tutorials -type d -name .ipynb_kaggle -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
         NOTEBOOKS_TO_PATCH=""
         while read -r PATTERN; do
           NOTEBOOKS_TO_PATCH="${NOTEBOOKS_TO_PATCH} $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
