@@ -41,15 +41,24 @@ jobs:
       work_directory: open_in_colab
       notebook_pattern: ${{ matrix.notebook_pattern }}
       notebook_preparation: |
+        BRANCH="${{ (inputs || github.event.inputs).branch }}"
+        if [ -z "${BRANCH}" ]; then
+          BRANCH=main
+        fi
+        BACKEND="${{ matrix.backend }}"
+        NOTEBOOK_PATTERN="${{ matrix.notebook_pattern }}"
         git clone https://github.com/viskex/viskex.git
         cd viskex
-        if [ -n "${{ (inputs || github.event.inputs).branch }}" ]; then
-          git checkout "${{ (inputs || github.event.inputs).branch }}"
-        fi
+        git checkout ${BRANCH}
+        NOTEBOOKS_TO_PATCH=""
+        while read -r PATTERN; do
+          NOTEBOOKS_TO_PATCH="${NOTEBOOKS_TO_PATCH} $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
+        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
+        python3 ../share/open_in_cloud/replace_common.py ${BRANCH} ${NOTEBOOKS_TO_PATCH}
         NOTEBOOKS_TO_INCLUDE=""
         while read -r PATTERN; do
           NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
-        done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
+        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
         rsync -avz --delete --include "*/" ${NOTEBOOKS_TO_INCLUDE} --exclude="*" tutorials ../open_in_colab/
       fem_on_colab_packages: ${{ matrix.fem_on_colab_packages }}
       pip_packages: |
@@ -88,15 +97,24 @@ jobs:
       work_directory: open_in_kaggle
       notebook_pattern: ${{ matrix.notebook_pattern }}
       notebook_preparation: |
+        BRANCH="${{ (inputs || github.event.inputs).branch }}"
+        if [ -z "${BRANCH}" ]; then
+          BRANCH=main
+        fi
+        BACKEND="${{ matrix.backend }}"
+        NOTEBOOK_PATTERN="${{ matrix.notebook_pattern }}"
         git clone https://github.com/viskex/viskex.git
         cd viskex
-        if [ -n "${{ (inputs || github.event.inputs).branch }}" ]; then
-          git checkout "${{ (inputs || github.event.inputs).branch }}"
-        fi
+        git checkout ${BRANCH}
+        NOTEBOOKS_TO_PATCH=""
+        while read -r PATTERN; do
+          NOTEBOOKS_TO_PATCH="${NOTEBOOKS_TO_PATCH} $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
+        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
+        python3 ../share/open_in_cloud/replace_common.py ${BRANCH} ${NOTEBOOKS_TO_PATCH}
         NOTEBOOKS_TO_INCLUDE=""
         while read -r PATTERN; do
           NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
-        done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
+        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
         rsync -avz --delete --include "*/" ${NOTEBOOKS_TO_INCLUDE} --exclude="*" tutorials ../open_in_kaggle/
       fem_on_kaggle_packages: ${{ matrix.fem_on_kaggle_packages }}
       pip_packages: |
