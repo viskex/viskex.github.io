@@ -73,12 +73,9 @@ jobs:
         run: |
           BACKEND=backend_${{ matrix.backend }}
           python3 -m pip install .[${BACKEND},tutorials]
-      - name: Install nbconvert and configure plotly
+      - name: Install nbconvert
         run: |
           python3 -m pip -q install nbconvert
-          PLOTLY_INIT=$(python3 -c 'import plotly; print(plotly.__file__)')
-          echo "import plotly.offline" >> ${PLOTLY_INIT}
-          echo "plotly.offline.init_notebook_mode(connected=True)" >> ${PLOTLY_INIT}
       - name: Copy jupyter template from website repository
         run: |
           jupyter --paths --json > /tmp/jupyter-paths
