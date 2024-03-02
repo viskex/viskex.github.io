@@ -4,7 +4,7 @@ viskex
     :description lang=en:
         viskex is a library for the interactive visualization of finite element simulations within jupyter notebooks
         in JupyterLab, Google Colab or Kaggle.  viskex is currently developed at Università Cattolica del Sacro Cuore
-        by Dr. Francesco Ballarin.
+        by Prof. Francesco Ballarin.
 
 .. image:: _static/images/github-logo.png
     :target: https://github.com/viskex/viskex
@@ -32,7 +32,7 @@ Description
 Authors
 ------------------------
 
-**viskex** is currently developed and maintained at `Università Cattolica del Sacro Cuore <https://www.unicatt.it/>`__ by `Dr. Francesco Ballarin <https://www.francescoballarin.it>`__.
+**viskex** is currently developed and maintained at `Università Cattolica del Sacro Cuore <https://www.unicatt.it/>`__ by `Prof. Francesco Ballarin <https://www.francescoballarin.it>`__.
 
 Timeline and funding
 ------------------------

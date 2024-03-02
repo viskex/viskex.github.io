@@ -146,7 +146,7 @@ def on_build_finished(app, exc):
   "@context": "http://schema.org",
   "@type": "SoftwareApplication",
   "name": "viskex - interactive visualization for firedrake and FEniCSx",
-  "description": "viskex is a library for the interactive visualization of finite element simulations within jupyter notebooks in JupyterLab, Google Colab or Kaggle.  viskex is currently developed at Università Cattolica del Sacro Cuore by Dr. Francesco Ballarin.",
+  "description": "viskex is a library for the interactive visualization of finite element simulations within jupyter notebooks in JupyterLab, Google Colab or Kaggle.  viskex is currently developed at Università Cattolica del Sacro Cuore by Prof. Francesco Ballarin.",
   "keywords": "viskex, firedrake, FEniCS, finite element, jupyter, visualization",
   "softwareHelp": "https://viskex.github.io/",
   "operatingSystem": "Linux",
@@ -158,7 +158,7 @@ def on_build_finished(app, exc):
 </script>
 
 <meta property="og:title" content="viskex - interactive visualization for firedrake and FEniCSx" />
-<meta property="og:description" content="viskex is a library for the interactive visualization of finite element simulations within jupyter notebooks in JupyterLab, Google Colab or Kaggle.  viskex is currently developed at Università Cattolica del Sacro Cuore by Dr. Francesco Ballarin." />
+<meta property="og:description" content="viskex is a library for the interactive visualization of finite element simulations within jupyter notebooks in JupyterLab, Google Colab or Kaggle.  viskex is currently developed at Università Cattolica del Sacro Cuore by Prof. Francesco Ballarin." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="viskex" />
 <meta property="og:url" content="https://viskex.github.io/" />
