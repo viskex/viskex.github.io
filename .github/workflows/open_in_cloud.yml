@@ -26,15 +26,14 @@ jobs:
           - backend: dolfinx
             fem_on_colab_packages: |
               gmsh@current%dolfinx.io
-              fenicsx==real@current$dolfinx
+              fenicsx==development-real@current$dolfinx
             notebook_pattern: |
               "**/tutorial_*_dolfinx.ipynb"
           - backend: firedrake
             fem_on_colab_packages: |
-              ngsolve==real@current%netgen
-              firedrake==real@current
+              firedrake==development-real@current
             notebook_pattern: |
-              "**/tutorial_*_firedrake*.ipynb"
+              "**/tutorial_*_firedrake.ipynb"
       fail-fast: false
     uses: fem-on-colab/open-in-colab-workflow/.github/workflows/workflow_call.yml@main
     with:
@@ -86,15 +85,14 @@ jobs:
           - backend: dolfinx
             fem_on_kaggle_packages: |
               gmsh@current%dolfinx.io
-              fenicsx==real@current$dolfinx
+              fenicsx==development-real@current$dolfinx
             notebook_pattern: |
               "**/tutorial_*_dolfinx.ipynb"
           - backend: firedrake
             fem_on_kaggle_packages: |
-              ngsolve==real@current%netgen
-              firedrake==real@current
+              firedrake==development-real@current
             notebook_pattern: |
-              "**/tutorial_*_firedrake*.ipynb"
+              "**/tutorial_*_firedrake.ipynb"
       fail-fast: false
     uses: fem-on-kaggle/open-in-kaggle-workflow/.github/workflows/workflow_call.yml@main
     with:
