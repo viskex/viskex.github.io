@@ -25,21 +25,12 @@ jobs:
     strategy:
       matrix:
         include:
-          - backend: dolfinx
+          - backend: dolfinx-nightly
             container: ghcr.io/fenics/dolfinx/dolfinx:nightly
-            setup_container: |
-              export DEBIAN_FRONTEND="noninteractive"
-              apt update -y -q
-              apt install -y -qq xvfb
             notebook_pattern: |
               "**/tutorial_*_dolfinx.ipynb"
-          - backend: firedrake
+          - backend: firedrake-nightly
             container: firedrakeproject/firedrake-vanilla-default
-            setup_container: |
-              export DEBIAN_FRONTEND="noninteractive"
-              apt update -y -q
-              apt install -y -qq xvfb
-              rm /usr/lib/python3.*/EXTERNALLY-MANAGED
             notebook_pattern: |
               "**/tutorial_*_firedrake*.ipynb"
       fail-fast: false
@@ -67,8 +58,18 @@ jobs:
           path: _website
       - name: Setup container
         run: |
-          ${{ matrix.setup_container }}
-          apt install -y -qq rsync
+          export DEBIAN_FRONTEND="noninteractive"
+          apt update -y -q
+          apt install -y -qq rsync xvfb
+          if [[ "${{ matrix.backend }}" == "dolfinx"* ]]; then
+            :
+          elif [[ "${{ matrix.backend }}" == "firedrake"* ]]; then
+            rm /usr/lib/python3.*/EXTERNALLY-MANAGED
+          else
+            echo "Invalid backend"
+            exit 1
+          fi
+        shell: bash
       - name: Install viskex
         run: |
           BACKEND=backend_${{ matrix.backend }}
