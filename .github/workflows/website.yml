@@ -29,8 +29,8 @@ jobs:
             container: ghcr.io/fenics/dolfinx/dolfinx:nightly
             notebook_pattern: |
               "**/tutorial_*_dolfinx.ipynb"
-          - backend: firedrake-nightly
-            container: firedrakeproject/firedrake-vanilla-default
+          - backend: firedrake-latest
+            container: firedrakeproject/firedrake-vanilla-default:latest
             notebook_pattern: |
               "**/tutorial_*_firedrake*.ipynb"
       fail-fast: false
