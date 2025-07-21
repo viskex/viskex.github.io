@@ -72,8 +72,14 @@ jobs:
         shell: bash
       - name: Install viskex
         run: |
-          BACKEND=backend_${{ matrix.backend }}
-          python3 -m pip install .[${BACKEND},tutorials]
+          if [[ "${{ matrix.backend }}" == "dolfinx"* ]]; then
+            python3 -m pip install .[backend-dolfinx,tutorials]
+          elif [[ "${{ matrix.backend }}" == "firedrake"* ]]; then
+            python3 -m pip install .[backend-firedrake,tutorials]
+          else
+            echo "Invalid backend"
+            exit 1
+          fi
       - name: Install nbconvert
         run: |
           python3 -m pip install -q nbconvert
