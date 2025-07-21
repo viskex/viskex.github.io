@@ -8,7 +8,6 @@ Installation
 Prerequisites
 -------------
 
-Installation requirements are automatically handled during the setup.
 In order to run the tutorials you may need to install one of the supported finite element backends, namely `dolfinx <https://github.com/FEniCS/dolfinx>`__ and `firedrake <https://github.com/firedrakeproject/firedrake>`__.
 
 Installation
