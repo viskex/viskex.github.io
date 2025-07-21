@@ -14,7 +14,7 @@ In order to run the tutorials you may need to install one of the supported finit
 Installation
 ------------
 
-**viskex** is available on PyPI. It uses extras to specify the finite element backend when installing via `pip` and to install additional packages required to run the tutorials.
+**viskex** is available on PyPI. Use `pip` extras to select the finite element backend and install additional dependencies needed for the tutorials.
 
 Installation with the dolfinx backend
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
