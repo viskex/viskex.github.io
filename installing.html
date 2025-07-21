@@ -248,11 +248,15 @@
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#prerequisites" class="md-nav__link">Prerequisites</a>
         </li>
-        <li class="md-nav__item"><a href="#installation-and-usage" class="md-nav__link">Installation and usage</a>
+        <li class="md-nav__item"><a href="#id1" class="md-nav__link">Installation</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#installation-with-the-dolfinx-backend" class="md-nav__link">Installation with the dolfinx backend</a>
         </li>
-        <li class="md-nav__item"><a href="#external-libraries-used-for-plotting" class="md-nav__link">External libraries used for plotting</a>
+        <li class="md-nav__item"><a href="#installation-with-the-firedrake-backend" class="md-nav__link">Installation with the firedrake backend</a>
+        </li></ul>
+            </nav>
         </li>
-        <li class="md-nav__item"><a href="#compatibility-with-upstream-releases" class="md-nav__link">Compatibility with upstream releases</a>
+        <li class="md-nav__item"><a href="#running-tutorials" class="md-nav__link">Running tutorials</a>
         </li></ul>
             </nav>
         </li>
@@ -296,11 +300,15 @@
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#prerequisites" class="md-nav__link">Prerequisites</a>
         </li>
-        <li class="md-nav__item"><a href="#installation-and-usage" class="md-nav__link">Installation and usage</a>
+        <li class="md-nav__item"><a href="#id1" class="md-nav__link">Installation</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#installation-with-the-dolfinx-backend" class="md-nav__link">Installation with the dolfinx backend</a>
         </li>
-        <li class="md-nav__item"><a href="#external-libraries-used-for-plotting" class="md-nav__link">External libraries used for plotting</a>
+        <li class="md-nav__item"><a href="#installation-with-the-firedrake-backend" class="md-nav__link">Installation with the firedrake backend</a>
+        </li></ul>
+            </nav>
         </li>
-        <li class="md-nav__item"><a href="#compatibility-with-upstream-releases" class="md-nav__link">Compatibility with upstream releases</a>
+        <li class="md-nav__item"><a href="#running-tutorials" class="md-nav__link">Running tutorials</a>
         </li></ul>
             </nav>
         </li>
@@ -325,29 +333,31 @@
 <p>Installation requirements are automatically handled during the setup.
 In order to run the tutorials you may need to install one of the supported finite element backends, namely <a class="reference external" href="https://github.com/FEniCS/dolfinx">dolfinx</a> and <a class="reference external" href="https://github.com/firedrakeproject/firedrake">firedrake</a>.</p>
 </section>
-<section id="installation-and-usage">
-<h2 id="installation-and-usage">Installation and usage<a class="headerlink" href="#installation-and-usage" title="Link to this heading">¶</a></h2>
-<p>Simply clone the <strong>viskex</strong> public repository:</p>
+<section id="id1">
+<h2 id="id1">Installation<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p><strong>viskex</strong> is available on PyPI. It uses extras to specify the finite element backend when installing via <cite>pip</cite> and to install additional packages required to run the tutorials.</p>
+<section id="installation-with-the-dolfinx-backend">
+<h3 id="installation-with-the-dolfinx-backend">Installation with the dolfinx backend<a class="headerlink" href="#installation-with-the-dolfinx-backend" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 -m pip install 'viskex[backend-dolfinx,tutorials]'</span>
+</pre></div>
+</div>
+</section>
+<section id="installation-with-the-firedrake-backend">
+<h3 id="installation-with-the-firedrake-backend">Installation with the firedrake backend<a class="headerlink" href="#installation-with-the-firedrake-backend" title="Link to this heading">¶</a></h3>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">python3 -m pip install 'viskex[backend-firedrake,tutorials]'</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="running-tutorials">
+<h2 id="running-tutorials">Running tutorials<a class="headerlink" href="#running-tutorials" title="Link to this heading">¶</a></h2>
+<p>To run the tutorials, first clone the <strong>viskex</strong> repository. Then, ensure you check out the tag that corresponds to the version of <strong>viskex</strong> currently installed.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone https://github.com/viskex/viskex.git</span>
+<span class="go">cd viskex</span>
+<span class="go">VISKEX_VERSION=$(python3 -c "import viskex; print(viskex.__version__)")</span>
+<span class="go">git checkout ${VISKEX_VERSION}</span>
 </pre></div>
 </div>
-<p>and install the package by typing</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">cd viskex</span>
-<span class="go">python3 -m pip install '.[tutorials]'</span>
-</pre></div>
-</div>
-</section>
-<section id="external-libraries-used-for-plotting">
-<h2 id="external-libraries-used-for-plotting">External libraries used for plotting<a class="headerlink" href="#external-libraries-used-for-plotting" title="Link to this heading">¶</a></h2>
-<p>1D plots are provided by <code class="code docutils literal notranslate"><span class="pre">plotly</span></code>, while 2D/3D plots are rendered with <code class="code docutils literal notranslate"><span class="pre">pyvista</span></code> using <code class="code docutils literal notranslate"><span class="pre">trame</span></code>. The default <code class="code docutils literal notranslate"><span class="pre">pyvista</span></code> backend is <code class="code docutils literal notranslate"><span class="pre">client</span></code> when running in JupyterLab, and <code class="code docutils literal notranslate"><span class="pre">html</span></code> when running on Google Colab or Kaggle. Users can customize the active <code class="code docutils literal notranslate"><span class="pre">pyvista</span></code> backend by exporting the environment variable <code class="code docutils literal notranslate"><span class="pre">VISKEX_PYVISTA_BACKEND</span></code>: such operation is typically not required, with the only notable exceptions being testing different <code class="code docutils literal notranslate"><span class="pre">pyvista</span></code> backends on CI, or exporting notebooks to html via <code class="code docutils literal notranslate"><span class="pre">nbconvert</span></code>.</p>
-</section>
-<section id="compatibility-with-upstream-releases">
-<h2 id="compatibility-with-upstream-releases">Compatibility with upstream releases<a class="headerlink" href="#compatibility-with-upstream-releases" title="Link to this heading">¶</a></h2>
-<p>The <code class="code docutils literal notranslate"><span class="pre">main</span></code> branch of <strong>viskex</strong> targets the <code class="code docutils literal notranslate"><span class="pre">main</span></code> branch of <code class="code docutils literal notranslate"><span class="pre">dolfinx</span></code> and <code class="code docutils literal notranslate"><span class="pre">firedrake</span></code>, which may contain API changes compared to the latest release of the finite element backend. A new <strong>viskex</strong> version is not necessarily tagged alongside <code class="code docutils literal notranslate"><span class="pre">dolfinx</span></code> or <code class="code docutils literal notranslate"><span class="pre">firedrake</span></code> releases. Users willing to work with a fixed release of the finite element backend are encouraged to look for a <strong>viskex</strong> <a class="reference external" href="https://github.com/viskex/viskex/commits/main">commit</a> close to the upstream release date, and do a</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git checkout {commit SHA}</span>
-</pre></div>
-</div>
-<p>before installing <strong>viskex</strong>.</p>
 </section>
 </section>
 
