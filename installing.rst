@@ -2,7 +2,7 @@ Installation
 ============
 .. meta::
     :description lang=en:
-        Installation requirements are automatically handled during the setup.
+        viskex is available on PyPI. Use pip extras to install all required dependencies.
         In order to run the tutorials you may need to install one of the supported finite element backends.
 
 Prerequisites
