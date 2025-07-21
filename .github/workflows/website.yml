@@ -80,6 +80,7 @@ jobs:
             echo "Invalid backend"
             exit 1
           fi
+        shell: bash
       - name: Install nbconvert
         run: |
           python3 -m pip install -q nbconvert
