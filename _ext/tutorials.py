@@ -27,6 +27,24 @@ tutorials = {
             },
         },
     },
+    "03": {
+        "title": "Plotting high order meshes",
+        "description": "Interactive visualization of high order meshes",
+        "steps": {
+            "1D": {
+                "dolfinx": "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_dolfinx[order=1].html",
+                # "firedrake": "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_firedrake[order=1].html"
+            },
+            "2D": {
+                "dolfinx": "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_dolfinx[order=1].html",
+                # "firedrake": "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_firedrake[order=1].html"
+            },
+            "3D": {
+                "dolfinx": "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_dolfinx[order=1].html",
+                # "firedrake": "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_firedrake[order=1].html"
+            },
+        },
+    },
 }
 
 next = {
@@ -148,4 +166,53 @@ next = {
     "tutorials/02_garda/tutorial_garda_firedrake.html": {
         "repeat this tutorial with dolfinx": "tutorial_garda_firedrake.html"
     },
+    # tutorial 03
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_dolfinx[order=1].html": {
+        "next step: plot a quadratic mesh": "tutorial_high_order_meshes_1d_dolfinx[order=2].html",
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_1d_firedrake[order=1].html"
+    },
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_dolfinx[order=2].html": {
+        "next step: plot a cubic mesh": "tutorial_high_order_meshes_1d_dolfinx[order=3].html",
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_1d_firedrake[order=2].html"
+    },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_firedrake[order=1].html": {
+    #     "next step: plot a quadratic mesh": "tutorial_high_order_meshes_1d_firedrake[order=2].html",
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_1d_dolfinx[order=1].html"
+    # },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_firedrake[order=2].html": {
+    #     "next step: plot a cubic mesh": "tutorial_high_order_meshes_1d_firedrake[order=3].html",
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_1d_dolfinx[order=2].html"
+    # },
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_dolfinx[order=1].html": {
+        "next step: plot a quadratic mesh": "tutorial_high_order_meshes_2d_dolfinx[order=2].html",
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_2d_firedrake[order=1].html"
+    },
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_dolfinx[order=2].html": {
+        "next step: plot a cubic mesh": "tutorial_high_order_meshes_2d_dolfinx[order=3].html",
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_2d_firedrake[order=2].html"
+    },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_firedrake[order=1].html": {
+    #     "next step: plot a quadratic mesh": "tutorial_high_order_meshes_2d_firedrake[order=2].html",
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_2d_dolfinx[order=1].html"
+    # },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_firedrake[order=2].html": {
+    #     "next step: plot a cubic mesh": "tutorial_high_order_meshes_2d_firedrake[order=3].html",
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_2d_dolfinx[order=2].html"
+    # },
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_dolfinx[order=1].html": {
+        "next step: plot a quadratic mesh": "tutorial_high_order_meshes_3d_dolfinx[order=2].html",
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_3d_firedrake[order=1].html"
+    },
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_dolfinx[order=2].html": {
+        "next step: plot a cubic mesh": "tutorial_high_order_meshes_3d_dolfinx[order=3].html",
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_3d_firedrake[order=2].html"
+    },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_firedrake[order=1].html": {
+    #     "next step: plot a quadratic mesh": "tutorial_high_order_meshes_3d_firedrake[order=2].html",
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_3d_dolfinx[order=1].html"
+    # },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_firedrake[order=2].html": {
+    #     "next step: plot a cubic mesh": "tutorial_high_order_meshes_3d_firedrake[order=3].html",
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_3d_dolfinx[order=2].html"
+    # },
 }
