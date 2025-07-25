@@ -44,7 +44,6 @@ jobs:
         if [ -z "${BRANCH}" ]; then
           BRANCH=main
         fi
-        BACKEND="${{ matrix.backend }}"
         NOTEBOOK_PATTERN="${{ matrix.notebook_pattern }}"
         python3 -m pip install --no-dependencies nbvalx simpleeval
         git clone https://github.com/viskex/viskex.git
@@ -53,6 +52,7 @@ jobs:
         NO_TESTS_COLLECTED=5
         python3 -m pytest --ipynb-action=create-notebooks --collapse --work-dir=.ipynb_colab tutorials || (($?==$NO_TESTS_COLLECTED))
         find tutorials -type d -name .ipynb_colab -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
+        find tutorials -type f -name '*\[*].ipynb' -exec bash -c 'for f; do dir=$(dirname "$f"); base=$(basename "$f"); stem="${base%%[*}"; plain="$dir/$stem.ipynb"; if [ -f "$plain" ]; then rm "$plain"; fi; done' _ {} +
         NOTEBOOKS_TO_PATCH=""
         while read -r PATTERN; do
           NOTEBOOKS_TO_PATCH="${NOTEBOOKS_TO_PATCH} $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
@@ -63,6 +63,7 @@ jobs:
           NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
         done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
         rsync -avz --delete --include "*/" ${NOTEBOOKS_TO_INCLUDE} --exclude="*" tutorials ../open_in_colab/
+        find ../open_in_colab/ -type f -name "*.ipynb" -exec bash -c 'for f; do new=${f//[\[\]=]/_}; if [[ "$f" != "$new" && ! -e "$new" ]]; then mv "$f" "$new" && ln -s "$(basename "$new")" "$f"; fi; done' _ {} +
       fem_on_colab_packages: ${{ matrix.fem_on_colab_packages }}
       pip_packages: |
         viskex@https://github.com/viskex/viskex.git@current
@@ -72,9 +73,10 @@ jobs:
         Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
         NOTEBOOKS_TO_TEST=""
         while read -r PATTERN; do
-          NOTEBOOKS_TO_TEST="${NOTEBOOKS_TO_TEST} $(find open_in_colab -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
+          NOTEBOOKS_TO_TEST="${NOTEBOOKS_TO_TEST} $(find open_in_colab -type f -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
         done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
         python3 -m pytest --nbval ${NOTEBOOKS_TO_TEST}
+        find open_in_colab -type l -name "*.ipynb" -exec bash -c 'for link; do target=$(readlink -f "$link"); [[ -f "$target" ]] && rm "$link" && mv "$target" "$link"; done' _ {} +
       publish_on: github@viskex/viskex.github.io@open-in-colab
       publish_if_repository: viskex/viskex.github.io
 
@@ -103,7 +105,6 @@ jobs:
         if [ -z "${BRANCH}" ]; then
           BRANCH=main
         fi
-        BACKEND="${{ matrix.backend }}"
         NOTEBOOK_PATTERN="${{ matrix.notebook_pattern }}"
         python3 -m pip install --no-dependencies nbvalx simpleeval
         git clone https://github.com/viskex/viskex.git
@@ -112,6 +113,7 @@ jobs:
         NO_TESTS_COLLECTED=5
         python3 -m pytest --ipynb-action=create-notebooks --collapse --work-dir=.ipynb_kaggle tutorials || (($?==$NO_TESTS_COLLECTED))
         find tutorials -type d -name .ipynb_kaggle -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
+        find tutorials -type f -name '*\[*].ipynb' -exec bash -c 'for f; do dir=$(dirname "$f"); base=$(basename "$f"); stem="${base%%[*}"; plain="$dir/$stem.ipynb"; if [ -f "$plain" ]; then rm "$plain"; fi; done' _ {} +
         NOTEBOOKS_TO_PATCH=""
         while read -r PATTERN; do
           NOTEBOOKS_TO_PATCH="${NOTEBOOKS_TO_PATCH} $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
@@ -122,6 +124,7 @@ jobs:
           NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
         done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
         rsync -avz --delete --include "*/" ${NOTEBOOKS_TO_INCLUDE} --exclude="*" tutorials ../open_in_kaggle/
+        find ../open_in_kaggle/ -type f -name "*.ipynb" -exec bash -c 'for f; do new=${f//[\[\]=]/_}; if [[ "$f" != "$new" && ! -e "$new" ]]; then mv "$f" "$new" && ln -s "$(basename "$new")" "$f"; fi; done' _ {} +
       fem_on_kaggle_packages: ${{ matrix.fem_on_kaggle_packages }}
       pip_packages: |
         viskex@https://github.com/viskex/viskex.git@current
@@ -131,9 +134,10 @@ jobs:
         Xvfb $DISPLAY -screen 0 1024x768x24 > /dev/null 2>&1 &
         NOTEBOOKS_TO_TEST=""
         while read -r PATTERN; do
-          NOTEBOOKS_TO_TEST="${NOTEBOOKS_TO_TEST} $(find open_in_kaggle -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
+          NOTEBOOKS_TO_TEST="${NOTEBOOKS_TO_TEST} $(find open_in_kaggle -type f -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
         done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
         python3 -m pytest --nbval ${NOTEBOOKS_TO_TEST}
+        find open_in_kaggle -type l -name "*.ipynb" -exec bash -c 'for link; do target=$(readlink -f "$link"); [[ -f "$target" ]] && rm "$link" && mv "$target" "$link"; done' _ {} +
       publish_on: github@viskex/viskex.github.io@open-in-kaggle
       publish_if_repository: viskex/viskex.github.io
 
