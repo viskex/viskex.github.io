@@ -51,7 +51,7 @@ jobs:
         cd viskex
         git checkout ${BRANCH}
         NO_TESTS_COLLECTED=5
-        python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_colab tutorials || (($?==$NO_TESTS_COLLECTED))
+        python3 -m pytest --ipynb-action=create-notebooks --collapse --work-dir=.ipynb_colab tutorials || (($?==$NO_TESTS_COLLECTED))
         find tutorials -type d -name .ipynb_colab -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
         NOTEBOOKS_TO_PATCH=""
         while read -r PATTERN; do
@@ -110,7 +110,7 @@ jobs:
         cd viskex
         git checkout ${BRANCH}
         NO_TESTS_COLLECTED=5
-        python3 -m pytest --ipynb-action=create-notebooks --tag-collapse --work-dir=.ipynb_kaggle tutorials || (($?==$NO_TESTS_COLLECTED))
+        python3 -m pytest --ipynb-action=create-notebooks --collapse --work-dir=.ipynb_kaggle tutorials || (($?==$NO_TESTS_COLLECTED))
         find tutorials -type d -name .ipynb_kaggle -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
         NOTEBOOKS_TO_PATCH=""
         while read -r PATTERN; do
