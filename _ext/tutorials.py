@@ -175,6 +175,9 @@ next = {
         "next step: plot a cubic mesh": "tutorial_high_order_meshes_1d_dolfinx[order=3].html",
         # "repeat this step with firedrake": "tutorial_high_order_meshes_1d_firedrake[order=2].html"
     },
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_dolfinx[order=3].html": {
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_1d_firedrake[order=3].html"
+    },
     # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_firedrake[order=1].html": {
     #     "next step: plot a quadratic mesh": "tutorial_high_order_meshes_1d_firedrake[order=2].html",
     #     "repeat this step with dolfinx": "tutorial_high_order_meshes_1d_dolfinx[order=1].html"
@@ -182,6 +185,9 @@ next = {
     # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_firedrake[order=2].html": {
     #     "next step: plot a cubic mesh": "tutorial_high_order_meshes_1d_firedrake[order=3].html",
     #     "repeat this step with dolfinx": "tutorial_high_order_meshes_1d_dolfinx[order=2].html"
+    # },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_1d_firedrake[order=3].html": {
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_1d_dolfinx[order=3].html"
     # },
     "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_dolfinx[order=1].html": {
         "next step: plot a quadratic mesh": "tutorial_high_order_meshes_2d_dolfinx[order=2].html",
@@ -191,6 +197,9 @@ next = {
         "next step: plot a cubic mesh": "tutorial_high_order_meshes_2d_dolfinx[order=3].html",
         # "repeat this step with firedrake": "tutorial_high_order_meshes_2d_firedrake[order=2].html"
     },
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_dolfinx[order=3].html": {
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_2d_firedrake[order=3].html"
+    },
     # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_firedrake[order=1].html": {
     #     "next step: plot a quadratic mesh": "tutorial_high_order_meshes_2d_firedrake[order=2].html",
     #     "repeat this step with dolfinx": "tutorial_high_order_meshes_2d_dolfinx[order=1].html"
@@ -198,6 +207,9 @@ next = {
     # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_firedrake[order=2].html": {
     #     "next step: plot a cubic mesh": "tutorial_high_order_meshes_2d_firedrake[order=3].html",
     #     "repeat this step with dolfinx": "tutorial_high_order_meshes_2d_dolfinx[order=2].html"
+    # },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_2d_firedrake[order=3].html": {
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_2d_dolfinx[order=3].html"
     # },
     "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_dolfinx[order=1].html": {
         "next step: plot a quadratic mesh": "tutorial_high_order_meshes_3d_dolfinx[order=2].html",
@@ -207,6 +219,9 @@ next = {
         "next step: plot a cubic mesh": "tutorial_high_order_meshes_3d_dolfinx[order=3].html",
         # "repeat this step with firedrake": "tutorial_high_order_meshes_3d_firedrake[order=2].html"
     },
+    "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_dolfinx[order=3].html": {
+        # "repeat this step with firedrake": "tutorial_high_order_meshes_3d_firedrake[order=3].html"
+    },
     # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_firedrake[order=1].html": {
     #     "next step: plot a quadratic mesh": "tutorial_high_order_meshes_3d_firedrake[order=2].html",
     #     "repeat this step with dolfinx": "tutorial_high_order_meshes_3d_dolfinx[order=1].html"
@@ -214,5 +229,8 @@ next = {
     # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_firedrake[order=2].html": {
     #     "next step: plot a cubic mesh": "tutorial_high_order_meshes_3d_firedrake[order=3].html",
     #     "repeat this step with dolfinx": "tutorial_high_order_meshes_3d_dolfinx[order=2].html"
+    # },
+    # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_firedrake[order=3].html": {
+    #     "repeat this step with dolfinx": "tutorial_high_order_meshes_3d_dolfinx[order=3].html"
     # },
 }

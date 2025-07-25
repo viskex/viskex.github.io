@@ -14,13 +14,13 @@ with open(filepath) as f:
 
 for (line_index, line) in enumerate(lines):
     if "<!-- next content -->" in line:
-        replaced_line = "<ul>"
         next_content = next[os.path.join(dirname, basename)]
-        assert len(next_content) > 0
-        for next_text, next_link in next_content.items():
-            replaced_line += f'<li><a href="{next_link}" style="text-decoration: underline;">{next_text}</a></li>'
-        replaced_line += "</ul>"
-        lines[line_index] = replaced_line + "\n"
+        if len(next_content) > 0:
+            replaced_line ="<h3>What's next?</h3><ul>"
+            for next_text, next_link in next_content.items():
+                replaced_line += f'<li><a href="{next_link}" style="text-decoration: underline;">{next_text}</a></li>'
+            replaced_line += "</ul>"
+            lines[line_index] = replaced_line + "\n"
 
 with open(filepath, "w") as f:
     f.write("".join(lines))
