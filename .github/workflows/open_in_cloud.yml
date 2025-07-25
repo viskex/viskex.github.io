@@ -28,12 +28,12 @@ jobs:
               gmsh@current%dolfinx.io
               fenicsx==development-real@current$dolfinx
             notebook_pattern: |
-              "**/tutorial_*_dolfinx.ipynb"
+              "**/tutorial_*_dolfinx*.ipynb"
           - backend: firedrake
             fem_on_colab_packages: |
               firedrake==development-real@current
             notebook_pattern: |
-              "**/tutorial_*_firedrake.ipynb"
+              "**/tutorial_*_firedrake*.ipynb"
       fail-fast: false
     uses: fem-on-colab/open-in-colab-workflow/.github/workflows/workflow_call.yml@main
     with:
@@ -87,12 +87,12 @@ jobs:
               gmsh@current%dolfinx.io
               fenicsx==development-real@current$dolfinx
             notebook_pattern: |
-              "**/tutorial_*_dolfinx.ipynb"
+              "**/tutorial_*_dolfinx*.ipynb"
           - backend: firedrake
             fem_on_kaggle_packages: |
               firedrake==development-real@current
             notebook_pattern: |
-              "**/tutorial_*_firedrake.ipynb"
+              "**/tutorial_*_firedrake*.ipynb"
       fail-fast: false
     uses: fem-on-kaggle/open-in-kaggle-workflow/.github/workflows/workflow_call.yml@main
     with:
