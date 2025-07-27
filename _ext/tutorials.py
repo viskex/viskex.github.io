@@ -45,6 +45,32 @@ tutorials = {
             },
         },
     },
+    "04": {
+        "title": "Advanced plotting options",
+        "description": "Customize plotting options related to pyvista or parallel computations",
+        "steps": {
+            "Providing pyvista plotter kwargs": {
+                "dolfinx": "tutorials/04_plotting_options/tutorial_pyvista_plotter_kwargs_dolfinx.html",
+                "firedrake": "tutorials/04_plotting_options/tutorial_pyvista_plotter_kwargs_firedrake.html"
+            },
+            "Customizing pyvista backend": {
+                "dolfinx": "tutorials/04_plotting_options/tutorial_pyvista_backend_dolfinx.html",
+                "firedrake": "tutorials/04_plotting_options/tutorial_pyvista_backend_firedrake.html"
+            },
+            "Creating subplots with pyvista": {
+                "dolfinx": "tutorials/04_plotting_options/tutorial_pyvista_subplots_dolfinx.html",
+                "firedrake": "tutorials/04_plotting_options/tutorial_pyvista_subplots_firedrake.html"
+            },
+            "Running in python files": {
+                "dolfinx": "tutorials/04_plotting_options/tutorial_plain_py_files_dolfinx.html",
+                "firedrake": "tutorials/04_plotting_options/tutorial_plain_py_files_firedrake.html"
+            },
+            "Running in parallel": {
+                "dolfinx": "tutorials/04_plotting_options/tutorial_parallel_dolfinx.html",
+                "firedrake": "tutorials/04_plotting_options/tutorial_parallel_firedrake.html"
+            },
+        },
+    },
 }
 
 next = {
@@ -233,4 +259,35 @@ next = {
     # "tutorials/03_high_order_meshes/tutorial_high_order_meshes_3d_firedrake[order=3].html": {
     #     "repeat this step with dolfinx": "tutorial_high_order_meshes_3d_dolfinx[order=3].html"
     # },
+    # tutorial 04
+    "tutorials/04_plotting_options/tutorial_pyvista_plotter_kwargs_dolfinx.html": {
+        "repeat this step with firedrake": "tutorials/04_plotting_options/tutorial_pyvista_plotter_kwargs_firedrake.html"
+    },
+    "tutorials/04_plotting_options/tutorial_pyvista_plotter_kwargs_firedrake.html": {
+        "repeat this step with dolfinx": "tutorials/04_plotting_options/tutorial_pyvista_plotter_kwargs_dolfinx.html"
+    },
+    "tutorials/04_plotting_options/tutorial_pyvista_backend_dolfinx.html": {
+        "repeat this step with firedrake": "tutorials/04_plotting_options/tutorial_pyvista_backend_firedrake.html"
+    },
+    "tutorials/04_plotting_options/tutorial_pyvista_backend_firedrake.html": {
+        "repeat this step with dolfinx": "tutorials/04_plotting_options/tutorial_pyvista_backend_dolfinx.html"
+    },
+    "tutorials/04_plotting_options/tutorial_pyvista_subplots_dolfinx.html": {
+        "repeat this step with firedrake": "tutorials/04_plotting_options/tutorial_pyvista_subplots_firedrake.html"
+    },
+    "tutorials/04_plotting_options/tutorial_pyvista_subplots_firedrake.html": {
+        "repeat this step with dolfinx": "tutorials/04_plotting_options/tutorial_pyvista_subplots_dolfinx.html"
+    },
+    "tutorials/04_plotting_options/tutorial_plain_py_files_dolfinx.html": {
+        "repeat this step with firedrake": "tutorials/04_plotting_options/tutorial_plain_py_files_firedrake.html"
+    },
+    "tutorials/04_plotting_options/tutorial_plain_py_files_firedrake.html": {
+        "repeat this step with dolfinx": "tutorials/04_plotting_options/tutorial_plain_py_files_dolfinx.html"
+    },
+    "tutorials/04_plotting_options/tutorial_parallel_dolfinx.html": {
+        "repeat this step with firedrake": "tutorials/04_plotting_options/tutorial_parallel_firedrake.html"
+    },
+    "tutorials/04_plotting_options/tutorial_parallel_firedrake.html": {
+        "repeat this step with dolfinx": "tutorials/04_plotting_options/tutorial_parallel_dolfinx.html"
+    },
 }

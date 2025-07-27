@@ -53,15 +53,17 @@ jobs:
         python3 -m pytest --ipynb-action=create-notebooks --collapse --work-dir=.ipynb_colab tutorials || (($?==$NO_TESTS_COLLECTED))
         find tutorials -type d -name .ipynb_colab -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
         find tutorials -type f -name '*\[*].ipynb' -exec bash -c 'for f; do dir=$(dirname "$f"); base=$(basename "$f"); stem="${base%%[*}"; plain="$dir/$stem.ipynb"; if [ -f "$plain" ]; then rm "$plain"; fi; done' _ {} +
-        NOTEBOOKS_TO_PATCH=""
-        while read -r PATTERN; do
-          NOTEBOOKS_TO_PATCH="${NOTEBOOKS_TO_PATCH} $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
-        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
-        python3 ../share/open_in_cloud/replace_common.py ${BRANCH} ${NOTEBOOKS_TO_PATCH}
-        NOTEBOOKS_TO_INCLUDE=""
-        while read -r PATTERN; do
-          NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
-        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
+        NOTEBOOKS_TO_RUN=$(while read -r PATTERN; do
+          for FILE in $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g')); do
+            if ! grep -q '%%px' "${FILE}"; then
+              echo "${FILE}"
+            fi
+          done
+        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}"))
+        python3 ../share/open_in_cloud/replace_common.py ${BRANCH} ${NOTEBOOKS_TO_RUN}
+        NOTEBOOKS_TO_INCLUDE=$(for FILE in ${NOTEBOOKS_TO_RUN}; do
+          echo -n "--include=${FILE} "
+        done)
         rsync -avz --delete --include "*/" ${NOTEBOOKS_TO_INCLUDE} --exclude="*" tutorials ../open_in_colab/
         find ../open_in_colab/ -type f -name "*.ipynb" -exec bash -c 'for f; do new=${f//[\[\]=]/_}; if [[ "$f" != "$new" && ! -e "$new" ]]; then mv "$f" "$new" && ln -s "$(basename "$new")" "$f"; fi; done' _ {} +
       fem_on_colab_packages: ${{ matrix.fem_on_colab_packages }}
@@ -114,15 +116,17 @@ jobs:
         python3 -m pytest --ipynb-action=create-notebooks --collapse --work-dir=.ipynb_kaggle tutorials || (($?==$NO_TESTS_COLLECTED))
         find tutorials -type d -name .ipynb_kaggle -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
         find tutorials -type f -name '*\[*].ipynb' -exec bash -c 'for f; do dir=$(dirname "$f"); base=$(basename "$f"); stem="${base%%[*}"; plain="$dir/$stem.ipynb"; if [ -f "$plain" ]; then rm "$plain"; fi; done' _ {} +
-        NOTEBOOKS_TO_PATCH=""
-        while read -r PATTERN; do
-          NOTEBOOKS_TO_PATCH="${NOTEBOOKS_TO_PATCH} $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g'))"
-        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
-        python3 ../share/open_in_cloud/replace_common.py ${BRANCH} ${NOTEBOOKS_TO_PATCH}
-        NOTEBOOKS_TO_INCLUDE=""
-        while read -r PATTERN; do
-          NOTEBOOKS_TO_INCLUDE="${NOTEBOOKS_TO_INCLUDE} --include=$(echo ${PATTERN} | sed 's|\"||g')"
-        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}")
+        NOTEBOOKS_TO_RUN=$(while read -r PATTERN; do
+          for FILE in $(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g')); do
+            if ! grep -q '%%px' "${FILE}"; then
+              echo "${FILE}"
+            fi
+          done
+        done <<< $(printf "%s" "${NOTEBOOK_PATTERN}"))
+        python3 ../share/open_in_cloud/replace_common.py ${BRANCH} ${NOTEBOOKS_TO_RUN}
+        NOTEBOOKS_TO_INCLUDE=$(for FILE in ${NOTEBOOKS_TO_RUN}; do
+          echo -n "--include=${FILE} "
+        done)
         rsync -avz --delete --include "*/" ${NOTEBOOKS_TO_INCLUDE} --exclude="*" tutorials ../open_in_kaggle/
         find ../open_in_kaggle/ -type f -name "*.ipynb" -exec bash -c 'for f; do new=${f//[\[\]=]/_}; if [[ "$f" != "$new" && ! -e "$new" ]]; then mv "$f" "$new" && ln -s "$(basename "$new")" "$f"; fi; done' _ {} +
       fem_on_kaggle_packages: ${{ matrix.fem_on_kaggle_packages }}

@@ -97,10 +97,9 @@ jobs:
           python3 -m pytest --ipynb-action=create-notebooks --collapse --work-dir=.ipynb_nbconvert tutorials || (($?==$NO_TESTS_COLLECTED))
           find tutorials -type d -name .ipynb_nbconvert -exec rsync -avz --remove-source-files --include="*.ipynb" --exclude="*" {}/ {}/.. \;
           find tutorials -type f -name '*\[*].ipynb' -exec bash -c 'for f; do dir=$(dirname "$f"); base=$(basename "$f"); stem="${base%%[*}"; plain="$dir/$stem.ipynb"; if [ -f "$plain" ]; then rm "$plain"; fi; done' _ {} +
-          NOTEBOOKS_TO_RUN=()
-          while read -r PATTERN; do
-            NOTEBOOKS_TO_RUN+=($(find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g')))
-          done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")
+          NOTEBOOKS_TO_RUN=($(while read -r PATTERN; do
+            find tutorials -wholename $(echo ${PATTERN} | sed 's|\"||g')
+          done <<< $(printf "%s" "${{ matrix.notebook_pattern }}")))
           mkdir -p _converted
           export XDG_RUNTIME_DIR="/tmp"
           export DISPLAY=":99"
@@ -123,8 +122,13 @@ jobs:
             fi
             popd
             pushd ${NOTEBOOK_OUTPUT_DIRNAME}
-            sed -i "s|\"https://colab.research.google.com\"|\"https://colab.research.google.com/github/viskex/viskex.github.io/blob/open-in-colab/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
-            sed -i "s|\"https://kaggle.com\"|\"https://kaggle.com/kernels/welcome?src=https://github.com/viskex/viskex.github.io/blob/open-in-kaggle/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
+            if ! grep -q '%%px' "${NOTEBOOK_OUTPUT_BASENAME}"; then
+              sed -i "s|\"https://colab.research.google.com\"|\"https://colab.research.google.com/github/viskex/viskex.github.io/blob/open-in-colab/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" "${NOTEBOOK_OUTPUT_BASENAME}"
+              sed -i "s|\"https://kaggle.com\"|\"https://kaggle.com/kernels/welcome?src=https://github.com/viskex/viskex.github.io/blob/open-in-kaggle/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" "${NOTEBOOK_OUTPUT_BASENAME}"
+            else
+              sed -i '/<a target="_blank" href="https:\/\/kaggle.com">/,/<\/a>/d' "${NOTEBOOK_OUTPUT_BASENAME}"
+              sed -i '/<a target="_blank" href="https:\/\/github.com">/,/<\/a>/d' "${NOTEBOOK_OUTPUT_BASENAME}"
+            fi
             sed -i "s|\"https://github.com\"|\"https://github.com/viskex/viskex/blob/main/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
             popd
             python3 _website/share/jupyter/add_whats_next.py ${NOTEBOOK_DIRNAME} ${NOTEBOOK_OUTPUT_BASENAME} ${NOTEBOOK_OUTPUT_DIRNAME}/${NOTEBOOK_OUTPUT_BASENAME}
