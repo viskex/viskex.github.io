@@ -126,8 +126,8 @@ jobs:
               sed -i "s|\"https://colab.research.google.com\"|\"https://colab.research.google.com/github/viskex/viskex.github.io/blob/open-in-colab/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" "${NOTEBOOK_OUTPUT_BASENAME}"
               sed -i "s|\"https://kaggle.com\"|\"https://kaggle.com/kernels/welcome?src=https://github.com/viskex/viskex.github.io/blob/open-in-kaggle/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" "${NOTEBOOK_OUTPUT_BASENAME}"
             else
-              sed -i '/<a target="_blank" href="https:\/\/kaggle.com">/,/<\/a>/d' "${NOTEBOOK_OUTPUT_BASENAME}"
-              sed -i '/<a target="_blank" href="https:\/\/github.com">/,/<\/a>/d' "${NOTEBOOK_OUTPUT_BASENAME}"
+              sed -i '/<a href="https:\/\/colab.research.google.com" target="_blank">/,/<\/a>/d' "${NOTEBOOK_OUTPUT_BASENAME}"
+              sed -i '/<a href="https:\/\/kaggle.com" target="_blank">/,/<\/a>/d' "${NOTEBOOK_OUTPUT_BASENAME}"
             fi
             sed -i "s|\"https://github.com\"|\"https://github.com/viskex/viskex/blob/main/${NOTEBOOK_DIRNAME}/${NOTEBOOK_BASENAME}\"|g" ${NOTEBOOK_OUTPUT_BASENAME}
             popd
