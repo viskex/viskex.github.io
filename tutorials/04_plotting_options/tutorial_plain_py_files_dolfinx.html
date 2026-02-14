@@ -7935,7 +7935,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-python"><pre><span></span><span class="n">pyvista</span><span class="o">.</span><span class="n">global_theme</span><span class="o">.</span><span class="n">notebook</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"DISPLAY"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">":99"</span><span class="p">:</span>  <span class="c1"># do not open render window on CI or on website</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"GITHUB_ACTIONS"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">"true"</span><span class="p">:</span>  <span class="c1"># do not open render window on CI or on website</span>
     <span class="n">viskex</span><span class="o">.</span><span class="n">dolfinx</span><span class="o">.</span><span class="n">plot_mesh</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
 </pre></div>
 </div>
